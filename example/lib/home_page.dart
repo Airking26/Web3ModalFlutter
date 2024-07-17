@@ -175,12 +175,15 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       _w3mService = W3MService(
         context: context,
-        projectId: DartDefines.projectId,
+        projectId: 'bdfe4b74c44308ffb46fa4e6198605af',
         logLevel: LogLevel.error,
         metadata: _pairingMetadata,
+        loginWithoutWallet: (){
+          debugPrint("Hello world");
+        },
         siweConfig: _siweConfig(siweAuthValue),
         enableAnalytics: analyticsValue, // OPTIONAL - null by default
-        enableEmail: emailWalletValue, // OPTIONAL - false by default
+        enableEmail: false, // OPTIONAL - false by default
         // requiredNamespaces: {},
         // optionalNamespaces: {},
         // includedWalletIds: {},

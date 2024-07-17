@@ -92,7 +92,8 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
           }
           final itemsToShow = items.getRange(0, itemsCount);
           return ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: maxHeight),
+            ///Added 56 to allow seeing footer
+            constraints: BoxConstraints(maxHeight: maxHeight + 56),
             child: WalletsList(
               onTapWallet: (data) {
                 service.selectWallet(data);

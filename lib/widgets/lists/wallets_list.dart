@@ -6,6 +6,7 @@ import 'package:web3modal_flutter/theme/constants.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/wallet_item_chip.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/wallet_list_item.dart';
+import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
 
 class WalletsList extends StatelessWidget {
   const WalletsList({
@@ -58,6 +59,33 @@ class WalletsList extends StatelessWidget {
     }
     if (bottomItems.isNotEmpty) {
       items.addAll(bottomItems);
+      items.add(
+        TextButton(
+          onPressed: Web3ModalProvider.of(context).service.loginWithoutWallet,
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          child: const SizedBox(
+            width: double.infinity,
+            child: Text(
+              "Login without wallet",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 16,
+                decoration: TextDecoration.none,
+                fontFamily: "Gilroy",
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+
+      );
     }
 
     return ListView.separated(

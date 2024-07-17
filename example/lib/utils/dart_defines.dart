@@ -1,6 +1,6 @@
 class DartDefines {
   static const String projectId = String.fromEnvironment(
-    'PROJECT_ID',
+    'bdfe4b74c44308ffb46fa4e6198605af',
   );
   static const String appKitAuth = String.fromEnvironment(
     'APPKIT_AUTH',

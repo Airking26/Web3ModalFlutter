@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 
@@ -54,6 +55,8 @@ abstract class IW3MService with ChangeNotifier {
   /// The currently selected wallet.
   W3MWalletInfo? get selectedWallet;
 
+  Function()? get loginWithoutWallet;
+
   /// Sets up the explorer and the web3App if they already been initialized.
   Future<void> init();
 
@@ -68,7 +71,7 @@ abstract class IW3MService with ChangeNotifier {
   @Deprecated('Add context param to W3MService and use openModalView() instead')
   Future<void> openModal(BuildContext context, [Widget? startWidget]);
 
-  Future<void> openModalView([Widget? startWidget]);
+  Future<void> openModalView([Widget? startWidget, Function() function]);
 
   /// Connects to the relay if not already connected.
   /// If the relay is already connected, this does nothing.

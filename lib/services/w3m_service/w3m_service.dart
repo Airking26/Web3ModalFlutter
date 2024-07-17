@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web3modal_flutter/constants/key_constants.dart';
 
@@ -61,15 +62,23 @@ class W3MService with ChangeNotifier implements IW3MService {
   String? _lastChainEmitted;
   bool _supportsOneClickAuth = false;
 
+  Function()? _loginWithoutWallet;
+
+  @override
+  Function()? get loginWithoutWallet => _loginWithoutWallet;
+
   W3MServiceStatus _status = W3MServiceStatus.idle;
+
   @override
   W3MServiceStatus get status => _status;
 
   W3MChainInfo? _currentSelectedChain;
+
   @override
   W3MChainInfo? get selectedChain => _currentSelectedChain;
 
   W3MWalletInfo? _selectedWallet;
+
   @override
   W3MWalletInfo? get selectedWallet => _selectedWallet;
 
@@ -78,18 +87,22 @@ class W3MService with ChangeNotifier implements IW3MService {
       _requiredNamespaces.isNotEmpty || _optionalNamespaces.isNotEmpty;
 
   String _wcUri = '';
+
   @override
   String? get wcUri => _wcUri;
 
   late IWeb3App _web3App;
+
   @override
   IWeb3App? get web3App => _web3App;
 
   String? _avatarUrl;
+
   @override
   String? get avatarUrl => _avatarUrl;
 
   double? _chainBalance;
+
   @override
   String get chainBalance {
     return coreUtils.instance.formatChainBalance(_chainBalance);
@@ -99,14 +112,17 @@ class W3MService with ChangeNotifier implements IW3MService {
   final balanceNotifier = ValueNotifier<String>('-.--');
 
   bool _isOpen = false;
+
   @override
   bool get isOpen => _isOpen;
 
   bool _isConnected = false;
+
   @override
   bool get isConnected => _isConnected;
 
   W3MSession? _currentSession;
+
   @override
   W3MSession? get session => _currentSession;
 
@@ -115,6 +131,7 @@ class W3MService with ChangeNotifier implements IW3MService {
   bool _disconnectOnClose = false;
 
   BuildContext? _context;
+
   @override
   BuildContext? get modalContext => _context;
 
@@ -133,6 +150,7 @@ class W3MService with ChangeNotifier implements IW3MService {
     bool? enableAnalytics,
     bool enableEmail = false,
     LogLevel logLevel = LogLevel.nothing,
+    Function()? loginWithoutWallet
   }) {
     if (web3App == null) {
       if (projectId == null) {
@@ -154,6 +172,8 @@ class W3MService with ChangeNotifier implements IW3MService {
 
     _context = context;
 
+    _loginWithoutWallet = loginWithoutWallet;
+
     _web3App = web3App ??
         Web3App(
           core: Core(projectId: projectId!),
@@ -172,7 +192,8 @@ class W3MService with ChangeNotifier implements IW3MService {
     analyticsService.instance = AnalyticsService(
       projectId: _projectId,
       enableAnalytics: enableAnalytics,
-    )..init().then((_) {
+    )
+      ..init().then((_) {
         analyticsService.instance.sendEvent(ModalLoadedEvent());
       });
 
@@ -213,8 +234,9 @@ class W3MService with ChangeNotifier implements IW3MService {
     if (!coreUtils.instance.isValidProjectID(_projectId)) {
       _logger.e(
         '[$runtimeType] projectId $_projectId is invalid. '
-        'Please provide a valid projectId. '
-        'See ${UrlConstants.docsUrl}/appkit/flutter/core/options for details.',
+            'Please provide a valid projectId. '
+            'See ${UrlConstants
+            .docsUrl}/appkit/flutter/core/options for details.',
       );
       return;
     }
@@ -373,8 +395,7 @@ class W3MService with ChangeNotifier implements IW3MService {
   }
 
   @override
-  Future<void> selectChain(
-    W3MChainInfo? chainInfo, {
+  Future<void> selectChain(W3MChainInfo? chainInfo, {
     bool switchChain = false,
     bool logEvent = true,
   }) async {
@@ -452,8 +473,7 @@ class W3MService with ChangeNotifier implements IW3MService {
     return _currentSession!.getApprovedEvents();
   }
 
-  Future<void> _setLocalEthChain(
-    W3MChainInfo chainInfo, {
+  Future<void> _setLocalEthChain(W3MChainInfo chainInfo, {
     bool logEvent = false,
   }) async {
     _logger.i('[$runtimeType] set local chain ${chainInfo.namespace}');
@@ -515,10 +535,6 @@ class W3MService with ChangeNotifier implements IW3MService {
     return _showModalView(context: context, startWidget: startWidget);
   }
 
-  @override
-  Future<void> openModalView([Widget? startWidget]) {
-    return _showModalView(startWidget: startWidget);
-  }
 
   Future<void> _showModalView({
     BuildContext? context,
@@ -559,9 +575,9 @@ class W3MService with ChangeNotifier implements IW3MService {
 
     final childWidget = theme == null
         ? Web3ModalTheme(
-            themeData: themeData,
-            child: Web3Modal(startWidget: showWidget),
-          )
+      themeData: themeData,
+      child: Web3Modal(startWidget: showWidget),
+    )
         : Web3Modal(startWidget: showWidget);
 
     final rootWidget = Web3ModalProvider(
@@ -602,7 +618,9 @@ class W3MService with ChangeNotifier implements IW3MService {
           final borderRadius = BorderRadius.all(Radius.circular(maxRadius));
           final constraints = BoxConstraints(maxWidth: 360, maxHeight: 600);
           return Dialog(
-            backgroundColor: Web3ModalTheme.colorsOf(_context!).background125,
+            backgroundColor: Web3ModalTheme
+                .colorsOf(_context!)
+                .background125,
             shape: RoundedRectangleBorder(borderRadius: borderRadius),
             clipBehavior: Clip.hardEdge,
             child: ConstrainedBox(
@@ -628,8 +646,7 @@ class W3MService with ChangeNotifier implements IW3MService {
     }
   }
 
-  void _trackSelectedWallet(
-    WalletRedirect? walletRedirect, {
+  void _trackSelectedWallet(WalletRedirect? walletRedirect, {
     bool inBrowser = false,
   }) {
     final walletName = _selectedWallet!.listing.name;
@@ -727,7 +744,7 @@ class W3MService with ChangeNotifier implements IW3MService {
           final nonce = await siweService.instance!.getNonce();
           final p1 = await siweService.instance!.config!.getMessageParams();
           final chains =
-              W3MChainPresets.chains.values.map((e) => e.namespace).toList();
+          W3MChainPresets.chains.values.map((e) => e.namespace).toList();
           final methods = p1.methods ?? MethodsConstants.allMethods;
           final p2 = {'nonce': nonce, 'chains': chains, 'methods': methods};
           final authParams = SessionAuthRequestParams.fromJson({
@@ -769,6 +786,7 @@ class W3MService with ChangeNotifier implements IW3MService {
   }
 
   SessionAuthResponse? _sessionAuthResponse;
+
   void _awaitOCAuthCallback(SessionAuthRequestResponse authResponse) async {
     try {
       _sessionAuthResponse = await authResponse.completer.future;
@@ -955,7 +973,9 @@ class W3MService with ChangeNotifier implements IW3MService {
     _isOpen = false;
     if (_disconnectOnClose) {
       _disconnectOnClose = false;
-      final currentKey = widgetStack.instance.getCurrent().key;
+      final currentKey = widgetStack.instance
+          .getCurrent()
+          .key;
       if (currentKey == KeyConstants.approveSiwePageKey) {
         final chainId = _currentSelectedChain?.chainId ?? '1';
         analyticsService.instance.sendEvent(ClickCancelSiwe(network: chainId));
@@ -1070,7 +1090,7 @@ class W3MService with ChangeNotifier implements IW3MService {
     //
     _logger.d(
       '[$runtimeType] request, chainId: $reqChainId, '
-      '${jsonEncode(request.toJson())}',
+          '${jsonEncode(request.toJson())}',
     );
     try {
       if (_currentSession!.sessionService.isMagic) {
@@ -1170,14 +1190,15 @@ class W3MService with ChangeNotifier implements IW3MService {
     if (requiredNSpaces != null) {
       // Set the required namespaces declared by the user on W3MService object
       _requiredNamespaces = requiredNSpaces.map(
-        (key, value) => MapEntry(
-          key,
-          RequiredNamespace(
-            chains: value.chains,
-            methods: value.methods,
-            events: value.events,
-          ),
-        ),
+            (key, value) =>
+            MapEntry(
+              key,
+              RequiredNamespace(
+                chains: value.chains,
+                methods: value.methods,
+                events: value.events,
+              ),
+            ),
       );
     } else {
       // Set the required namespaces to everything in our chain presets
@@ -1189,21 +1210,22 @@ class W3MService with ChangeNotifier implements IW3MService {
     if (optionalNSpaces != null) {
       // Set the optional namespaces declared by the user on W3MService object
       _optionalNamespaces = optionalNSpaces.map(
-        (key, value) => MapEntry(
-          key,
-          RequiredNamespace(
-            chains: value.chains,
-            methods: value.methods,
-            events: value.events,
-          ),
-        ),
+            (key, value) =>
+            MapEntry(
+              key,
+              RequiredNamespace(
+                chains: value.chains,
+                methods: value.methods,
+                events: value.events,
+              ),
+            ),
       );
     } else {
       // Set the optional namespaces to everything in our chain presets
       _optionalNamespaces = {
         StringConstants.namespace: RequiredNamespace(
           chains:
-              W3MChainPresets.chains.values.map((e) => e.namespace).toList(),
+          W3MChainPresets.chains.values.map((e) => e.namespace).toList(),
           methods: MethodsConstants.allMethods.toSet().toList(),
           events: EventsConstants.allEvents.toSet().toList(),
         ),
@@ -1462,7 +1484,14 @@ class W3MService with ChangeNotifier implements IW3MService {
       defaultValue: defaultValue,
     );
   }
+
+  @override
+  Future<void> openModalView([Widget? startWidget, Function()? function]) {
+    return _showModalView(startWidget: startWidget);
+  }
+
 }
+
 
 extension _W3MMagicExtension on W3MService {
   Future<void> _onMagicLoginEvent(MagicLoginEvent? args) async {
