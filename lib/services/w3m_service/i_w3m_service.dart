@@ -55,7 +55,7 @@ abstract class IW3MService with ChangeNotifier {
   /// The currently selected wallet.
   W3MWalletInfo? get selectedWallet;
 
-  Function()? get loginWithoutWallet;
+  Widget? get loginWithoutWalletWidget;
 
   /// Sets up the explorer and the web3App if they already been initialized.
   Future<void> init();

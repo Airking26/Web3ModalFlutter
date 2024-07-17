@@ -62,10 +62,10 @@ class W3MService with ChangeNotifier implements IW3MService {
   String? _lastChainEmitted;
   bool _supportsOneClickAuth = false;
 
-  Function()? _loginWithoutWallet;
+  Widget? _loginWithoutWalletWidget;
 
   @override
-  Function()? get loginWithoutWallet => _loginWithoutWallet;
+  Widget? get loginWithoutWalletWidget => _loginWithoutWalletWidget;
 
   W3MServiceStatus _status = W3MServiceStatus.idle;
 
@@ -150,7 +150,7 @@ class W3MService with ChangeNotifier implements IW3MService {
     bool? enableAnalytics,
     bool enableEmail = false,
     LogLevel logLevel = LogLevel.nothing,
-    Function()? loginWithoutWallet
+    Widget? loginWithoutWalletWidget
   }) {
     if (web3App == null) {
       if (projectId == null) {
@@ -172,7 +172,7 @@ class W3MService with ChangeNotifier implements IW3MService {
 
     _context = context;
 
-    _loginWithoutWallet = loginWithoutWallet;
+    _loginWithoutWalletWidget = loginWithoutWalletWidget;
 
     _web3App = web3App ??
         Web3App(

@@ -178,9 +178,32 @@ class _MyHomePageState extends State<MyHomePage> {
         projectId: 'bdfe4b74c44308ffb46fa4e6198605af',
         logLevel: LogLevel.error,
         metadata: _pairingMetadata,
-        loginWithoutWallet: (){
-          debugPrint("Hello world");
-        },
+        loginWithoutWalletWidget: TextButton(
+          onPressed: (){
+            debugPrint("holla");
+          },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          child: const SizedBox(
+            width: double.infinity,
+            child: Text(
+              "Login without wallet",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 16,
+                decoration: TextDecoration.none,
+                fontFamily: "Gilroy",
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
         siweConfig: _siweConfig(siweAuthValue),
         enableAnalytics: analyticsValue, // OPTIONAL - null by default
         enableEmail: false, // OPTIONAL - false by default

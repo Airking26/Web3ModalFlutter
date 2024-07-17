@@ -59,33 +59,7 @@ class WalletsList extends StatelessWidget {
     }
     if (bottomItems.isNotEmpty) {
       items.addAll(bottomItems);
-      items.add(
-        TextButton(
-          onPressed: Web3ModalProvider.of(context).service.loginWithoutWallet,
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            backgroundColor: Colors.green,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: const SizedBox(
-            width: double.infinity,
-            child: Text(
-              "Login without wallet",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                decoration: TextDecoration.none,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-
-      );
+      if(Web3ModalProvider.of(context).service.loginWithoutWalletWidget != null) items.add(Web3ModalProvider.of(context).service.loginWithoutWalletWidget!);
     }
 
     return ListView.separated(
