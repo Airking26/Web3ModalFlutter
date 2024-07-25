@@ -92,8 +92,8 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
           }
           final itemsToShow = items.getRange(0, itemsCount);
           return ConstrainedBox(
-            ///Added 56 to allow seeing footer
-            constraints: BoxConstraints(maxHeight: maxHeight + (Web3ModalProvider.of(context).service.loginWithoutWalletWidget == null ? 0 : 56)),
+            ///Added 64 to allow seeing footer
+            constraints: BoxConstraints(maxHeight: maxHeight + (Web3ModalProvider.of(context).service.loginWithoutWalletWidget == null ? 0 : 64)),
             child: WalletsList(
               onTapWallet: (data) {
                 service.selectWallet(data);

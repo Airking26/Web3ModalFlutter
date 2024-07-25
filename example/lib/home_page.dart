@@ -9,6 +9,7 @@ import 'package:walletconnect_flutter_dapp/utils/crypto/siwe_service.dart';
 import 'package:walletconnect_flutter_dapp/widgets/logger_widget.dart';
 import 'package:walletconnect_flutter_dapp/widgets/session_widget.dart';
 import 'package:walletconnect_flutter_dapp/utils/dart_defines.dart';
+import 'package:web3modal_flutter/widgets/lists/list_items/wallet_list_item.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -178,32 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
         projectId: 'bdfe4b74c44308ffb46fa4e6198605af',
         logLevel: LogLevel.error,
         metadata: _pairingMetadata,
-        loginWithoutWalletWidget: TextButton(
-          onPressed: (){
-            debugPrint("holla");
-          },
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            backgroundColor: Colors.green,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: const SizedBox(
-            width: double.infinity,
-            child: Text(
-              "Login without wallet",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                decoration: TextDecoration.none,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
+        loginWithoutWalletWidget: null,
         siweConfig: _siweConfig(siweAuthValue),
         enableAnalytics: analyticsValue, // OPTIONAL - null by default
         enableEmail: false, // OPTIONAL - false by default
