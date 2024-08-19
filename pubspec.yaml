@@ -23,8 +23,8 @@ dependencies:
   qr_flutter_wc: ^0.0.3
   shimmer: ^3.0.0
   url_launcher: ^6.2.5
-  uuid: ^4.4.2
-  walletconnect_flutter_v2: ^2.3.1
+  uuid: ^4.3.3
+  walletconnect_flutter_v2: ^2.3.0-beta04
   webview_flutter: ^4.8.0
   webview_flutter_android: ^3.16.6
   webview_flutter_wkwebview: ^3.14.0
