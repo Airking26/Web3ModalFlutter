@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
 import 'package:web3modal_flutter/models/grid_item.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/wallet_item_chip.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/wallet_list_item.dart';
-import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
 
 class WalletsList extends StatelessWidget {
   const WalletsList({
@@ -59,7 +57,7 @@ class WalletsList extends StatelessWidget {
     }
     if (bottomItems.isNotEmpty) {
       items.addAll(bottomItems);
-      if(Web3ModalProvider.of(context).service.loginWithoutWalletWidget != null) items.add(Web3ModalProvider.of(context).service.loginWithoutWalletWidget!);
+      //if(Web3ModalProvider.of(context).service.loginWithoutWalletWidget != null) items.add(Web3ModalProvider.of(context).service.loginWithoutWalletWidget!);
     }
 
     return ListView.separated(

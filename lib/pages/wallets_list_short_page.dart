@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
+import 'package:web3modal_flutter/constants/key_constants.dart';
 import 'package:web3modal_flutter/pages/about_wallets.dart';
 import 'package:web3modal_flutter/pages/confirm_email_page.dart';
 import 'package:web3modal_flutter/pages/connect_wallet_page.dart';
 import 'package:web3modal_flutter/pages/qr_code_page.dart';
+import 'package:web3modal_flutter/pages/wallets_list_long_page.dart';
 import 'package:web3modal_flutter/services/analytics_service/analytics_service_singleton.dart';
 import 'package:web3modal_flutter/services/analytics_service/models/analytics_event.dart';
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
@@ -13,18 +14,16 @@ import 'package:web3modal_flutter/services/magic_service/magic_service_singleton
 import 'package:web3modal_flutter/services/magic_service/models/email_login_step.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
-import 'package:web3modal_flutter/widgets/miscellaneous/input_email.dart';
-import 'package:web3modal_flutter/widgets/widget_stack/widget_stack_singleton.dart';
-import 'package:web3modal_flutter/pages/wallets_list_long_page.dart';
-import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
-import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
-import 'package:web3modal_flutter/constants/key_constants.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/all_wallets_item.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/wallet_item_chip.dart';
 import 'package:web3modal_flutter/widgets/lists/wallets_list.dart';
+import 'package:web3modal_flutter/widgets/miscellaneous/input_email.dart';
+import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
+import 'package:web3modal_flutter/widgets/navigation/navbar.dart';
 import 'package:web3modal_flutter/widgets/navigation/navbar_action_button.dart';
 import 'package:web3modal_flutter/widgets/value_listenable_builders/explorer_service_items_listener.dart';
-import 'package:web3modal_flutter/widgets/navigation/navbar.dart';
+import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
+import 'package:web3modal_flutter/widgets/widget_stack/widget_stack_singleton.dart';
 
 class WalletsListShortPage extends StatefulWidget {
   const WalletsListShortPage()
@@ -93,7 +92,18 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
           final itemsToShow = items.getRange(0, itemsCount);
           return ConstrainedBox(
             ///Added 64 to allow seeing footer
-            constraints: BoxConstraints(maxHeight: maxHeight + (Web3ModalProvider.of(context).service.loginWithoutWalletWidget == null ? 0 : 64)),
+            constraints: BoxConstraints(
+                maxHeight: maxHeight +
+                    (Web3ModalProvider.of(context)
+                                .service
+                                .loginWithoutWalletWidget ==
+                            null
+                        ? 0
+                        : Web3ModalProvider.of(context)
+                                .service
+                                .loginWithoutWalletWidget is Column
+                            ? 128
+                            : 64)),
             child: WalletsList(
               onTapWallet: (data) {
                 service.selectWallet(data);
@@ -102,6 +112,13 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
               firstItem: _EmailLoginWidget(),
               itemList: itemsToShow.toList(),
               bottomItems: [
+                if (Web3ModalProvider.of(context)
+                        .service
+                        .loginWithoutWalletWidget !=
+                    null)
+                  Web3ModalProvider.of(context)
+                      .service
+                      .loginWithoutWalletWidget!,
                 AllWalletsItem(
                   trailing: (items.length <= kShortWalletListCount)
                       ? null

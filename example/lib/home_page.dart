@@ -1,15 +1,12 @@
 import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:walletconnect_flutter_dapp/widgets/debug_drawer.dart';
-
-import 'package:web3modal_flutter/web3modal_flutter.dart';
-
 import 'package:walletconnect_flutter_dapp/utils/constants.dart';
 import 'package:walletconnect_flutter_dapp/utils/crypto/siwe_service.dart';
+import 'package:walletconnect_flutter_dapp/utils/dart_defines.dart';
+import 'package:walletconnect_flutter_dapp/widgets/debug_drawer.dart';
 import 'package:walletconnect_flutter_dapp/widgets/logger_widget.dart';
 import 'package:walletconnect_flutter_dapp/widgets/session_widget.dart';
-import 'package:walletconnect_flutter_dapp/utils/dart_defines.dart';
-import 'package:web3modal_flutter/widgets/lists/list_items/wallet_list_item.dart';
+import 'package:web3modal_flutter/web3modal_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -55,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         redirect: Redirect(
           native: 'web3modalflutter://',
-          universal: 'https://walletconnect.com/appkit',
+          // universal: 'https://walletconnect.com/appkit',
         ),
       );
 
@@ -176,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       _w3mService = W3MService(
         context: context,
-        projectId: 'bdfe4b74c44308ffb46fa4e6198605af',
+        projectId: '6149deb6df227a896cc36bca579b244a',
         logLevel: LogLevel.error,
         metadata: _pairingMetadata,
         loginWithoutWalletWidget: null,
@@ -186,14 +183,14 @@ class _MyHomePageState extends State<MyHomePage> {
         // requiredNamespaces: {},
         // optionalNamespaces: {},
         // includedWalletIds: {},
-        featuredWalletIds: {
+        /*featuredWalletIds: {
           'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase
           '18450873727504ae9315a084fa7624b5297d2fe5880f0982979c17345a138277', // Kraken Wallet
           'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // Metamask
           '1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369', // Rainbow
           'c03dfee351b6fcc421b4494ea33b9d4b92a984f87aa76d1663bb28705e95034a', // Uniswap
           '38f5d18bd8522c244bdd70cb4a68e0e718865155811c043f052fb9f1c51de662', // Bitget
-        },
+        },*/
         // excludedWalletIds: {
         //   'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa', // Coinbase
         // },
