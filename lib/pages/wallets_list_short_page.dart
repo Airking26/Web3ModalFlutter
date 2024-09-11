@@ -72,6 +72,9 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
       safeAreaRight: true,
       body: ExplorerServiceItemsListener(
         builder: (context, initialised, items, _) {
+          items.removeWhere((e) =>
+              e.id.toLowerCase() ==
+              'c6e486a3647853c8cbc957b8ee772a9e5df51cd2f411d4a3bbb3a675728eb069');
           if (!initialised) {
             return ConstrainedBox(
               constraints: BoxConstraints(maxHeight: maxHeight),
