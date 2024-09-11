@@ -9,13 +9,11 @@ import 'package:web3modal_flutter/pages/qr_code_page.dart';
 import 'package:web3modal_flutter/pages/wallets_list_long_page.dart';
 import 'package:web3modal_flutter/services/analytics_service/analytics_service_singleton.dart';
 import 'package:web3modal_flutter/services/analytics_service/models/analytics_event.dart';
-import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
 import 'package:web3modal_flutter/services/magic_service/magic_service_singleton.dart';
 import 'package:web3modal_flutter/services/magic_service/models/email_login_step.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 import 'package:web3modal_flutter/widgets/lists/list_items/all_wallets_item.dart';
-import 'package:web3modal_flutter/widgets/lists/list_items/wallet_item_chip.dart';
 import 'package:web3modal_flutter/widgets/lists/wallets_list.dart';
 import 'package:web3modal_flutter/widgets/miscellaneous/input_email.dart';
 import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
@@ -72,6 +70,7 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
       safeAreaRight: true,
       body: ExplorerServiceItemsListener(
         builder: (context, initialised, items, _) {
+          /// Removed grindery as it appears without consent
           items.removeWhere((e) =>
               e.id.toLowerCase() ==
               'c6e486a3647853c8cbc957b8ee772a9e5df51cd2f411d4a3bbb3a675728eb069');
@@ -94,7 +93,7 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
           }
           final itemsToShow = items.getRange(0, itemsCount);
           return ConstrainedBox(
-            ///Added 64 to allow seeing footer
+            ///Added 64 to allow seeing footer if widget, 128 if column or none if null
             constraints: BoxConstraints(
                 maxHeight: maxHeight +
                     (Web3ModalProvider.of(context)
@@ -123,7 +122,8 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
                       .service
                       .loginWithoutWalletWidget!,
                 AllWalletsItem(
-                  trailing: (items.length <= kShortWalletListCount)
+                  /// Commented out to not see number of wallets
+                  /*trailing: (items.length <= kShortWalletListCount)
                       ? null
                       : ValueListenableBuilder<int>(
                           valueListenable:
@@ -131,7 +131,7 @@ class _WalletsListShortPageState extends State<WalletsListShortPage> {
                           builder: (context, value, _) {
                             return WalletItemChip(value: value.lazyCount);
                           },
-                        ),
+                        ),*/
                   onTap: () {
                     if (items.length <= kShortWalletListCount) {
                       widgetStack.instance.push(
