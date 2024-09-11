@@ -1,18 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:web3modal_flutter/constants/key_constants.dart';
 import 'package:web3modal_flutter/pages/connect_wallet_page.dart';
 import 'package:web3modal_flutter/services/explorer_service/explorer_service_singleton.dart';
 import 'package:web3modal_flutter/theme/constants.dart';
-import 'package:web3modal_flutter/widgets/widget_stack/widget_stack_singleton.dart';
-import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
-import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
 import 'package:web3modal_flutter/widgets/lists/wallets_grid.dart';
-import 'package:web3modal_flutter/widgets/value_listenable_builders/explorer_service_items_listener.dart';
 import 'package:web3modal_flutter/widgets/miscellaneous/all_wallets_header.dart';
+import 'package:web3modal_flutter/widgets/miscellaneous/responsive_container.dart';
 import 'package:web3modal_flutter/widgets/navigation/navbar.dart';
+import 'package:web3modal_flutter/widgets/value_listenable_builders/explorer_service_items_listener.dart';
+import 'package:web3modal_flutter/widgets/web3modal_provider.dart';
+import 'package:web3modal_flutter/widgets/widget_stack/widget_stack_singleton.dart';
 
 class WalletsListLongPage extends StatefulWidget {
   const WalletsListLongPage() : super(key: KeyConstants.walletListLongPageKey);
@@ -88,6 +87,9 @@ class _WalletsListLongPageState extends State<WalletsListLongPage> {
                 child: ExplorerServiceItemsListener(
                   listen: !_paginating,
                   builder: (context, initialised, items, searching) {
+                    items.removeWhere((e) =>
+                        e.id.toLowerCase() ==
+                        'c6e486a3647853c8cbc957b8ee772a9e5df51cd2f411d4a3bbb3a675728eb069');
                     if (!initialised || searching) {
                       return WalletsGrid(
                         paddingTop: isSearchAvailable ? 0.0 : kPadding16,
