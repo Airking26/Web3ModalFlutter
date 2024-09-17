@@ -87,6 +87,7 @@ class _WalletsListLongPageState extends State<WalletsListLongPage> {
                 child: ExplorerServiceItemsListener(
                   listen: !_paginating,
                   builder: (context, initialised, items, searching) {
+                    /// Removed grindery as it appears without consent
                     items.removeWhere((e) =>
                         e.id.toLowerCase() ==
                         'c6e486a3647853c8cbc957b8ee772a9e5df51cd2f411d4a3bbb3a675728eb069');
